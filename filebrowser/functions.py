@@ -9,7 +9,7 @@ from urlparse import urlparse
 from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
 from django.core.files import File
-from django.core.files.storage import default_storage
+from django.core.files.storage import FileSystemStorage
 from django.utils.encoding import smart_str
 
 # filebrowser imports
@@ -23,6 +23,8 @@ else:
         from PIL import Image
     except ImportError:
         import Image
+
+storage = FileSystemStorage()
 
 
 def url_to_path(value):
@@ -237,7 +239,7 @@ def handle_file_upload(path, file):
     """
     
     file_path = os.path.join(path, file.name)
-    uploadedfile = default_storage.save(file_path, file)
+    uploadedfile = storage.save(file_path, file)
     return uploadedfile
 
 
